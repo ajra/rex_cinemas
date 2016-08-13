@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 
 import com.rexcinemas.R;
 import com.rexcinemas.utils.Common;
@@ -19,6 +20,7 @@ public abstract class BasicActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         Log.v("On Create", "On Create ---------->  " + getTAG() + " <----------  ");
     }
 

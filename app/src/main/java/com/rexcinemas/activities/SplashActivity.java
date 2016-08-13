@@ -6,6 +6,7 @@ import android.os.Handler;
 
 import com.rexcinemas.R;
 import com.rexcinemas.ui.navigation.NavigationActivity;
+import com.rexcinemas.ui.navigation.NavigationHomeActivity;
 
 public class SplashActivity extends BasicActivity {
 
@@ -17,7 +18,7 @@ public class SplashActivity extends BasicActivity {
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashActivity.this, NavigationActivity.class);
+                Intent intent = new Intent(SplashActivity.this, NavigationHomeActivity.class);
                 startActivity(intent);
                 finish();
             }
