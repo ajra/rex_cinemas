@@ -11,6 +11,9 @@
 
 
     <string name="ratting">Ratting</string>
+    <string name="dialog_no_inter_message">You have no active internet connection.</string>
+    <string name="under_development">Under Development</string>
+    <string name="no_connection_message">You aren\'t connected to the internet.\nPlease check your settings and try again.</string>
 
     <string name="next">NEXT</string>
     <string name="back">BACK</string>

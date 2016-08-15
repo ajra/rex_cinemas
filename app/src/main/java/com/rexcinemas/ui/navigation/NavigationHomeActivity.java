@@ -22,6 +22,7 @@ import com.rexcinemas.ui.cinemas.CinemasFragment;
 import com.rexcinemas.ui.now_showing.NowMainShowingFragment;
 import com.rexcinemas.ui.promotion.PromotionFragment;
 import com.rexcinemas.utils.Common;
+import com.rexcinemas.utils.ConnectionService;
 
 import java.util.ArrayList;
 
@@ -51,6 +52,9 @@ public class NavigationHomeActivity extends BasicActivity implements View.OnClic
     private String[] menuNameArray = {
             "Now Showing","Cinemas","Check booking","Promotion"
     };
+
+    Intent mConnectionServiceIntent;
+    private static boolean sServiceIsRunning = false;
 
 
     @Override
@@ -86,7 +90,25 @@ public class NavigationHomeActivity extends BasicActivity implements View.OnClic
         scrollRl.getLayoutParams().width = (int) (Common.getScreenWidth(NavigationHomeActivity.this) * ((float) 80 / 100));
         scrollRl.setX(-Common.getScreenWidth(NavigationHomeActivity.this) * ((float) 80 / 100));
         displayView(0);
+        // syncing service
+        mConnectionServiceIntent = new Intent(this, ConnectionService.class);
+        startSyncService();
     }
+
+    private void startSyncService() {
+        if (!sServiceIsRunning) {
+            sServiceIsRunning = true;
+            startService(mConnectionServiceIntent);
+        }
+    }
+
+    private void stopSyncService() {
+        if (sServiceIsRunning) {
+            sServiceIsRunning = false;
+            stopService(mConnectionServiceIntent);
+        }
+    }
+
 
     /**
      * Slide menu item click listener
@@ -141,22 +163,52 @@ public class NavigationHomeActivity extends BasicActivity implements View.OnClic
             fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit();
         }
+        menuChanges();
     }
 
 
 
     @Override
     public void onClick(View view) {
-        if(view == headerMenu)
-        {
-            if (!showingMenu) {
-                //Disable Swipe
-                bl_isNavigationOpened = true;
-                showingMenu = true;
-                outsideRl.animate().translationX((Common.getScreenWidth(this) * (float) 80 / 100));
-                scrollRl.animate().translationX(0).setListener(new Animator.AnimatorListener() {
+        if(view == headerMenu) {
+            menuChanges();
+        }
+    }
+
+    private void menuChanges() {
+        if (!showingMenu) {
+            //Disable Swipe
+            bl_isNavigationOpened = true;
+            showingMenu = true;
+            outsideRl.animate().translationX((Common.getScreenWidth(this) * (float) 80 / 100));
+            scrollRl.animate().translationX(0).setListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+                }
+            });
+
+
+        } else {
+            if (CATEGORY_ENABLED_DISABLED) {
+
+                bl_isNavigationOpened = false;
+                showingMenu = false;
+                outsideRl.animate().translationX(0).setListener(new Animator.AnimatorListener() {
                     @Override
                     public void onAnimationStart(Animator animation) {
+                        // TODO Auto-generated method stub
                     }
 
                     @Override
@@ -169,45 +221,25 @@ public class NavigationHomeActivity extends BasicActivity implements View.OnClic
 
                     @Override
                     public void onAnimationCancel(Animator animation) {
+                        if(CATEGORY_ENABLED_DISABLED)
+                        {
+                            CATEGORY_ENABLED_DISABLED = false;
+                        }
                     }
                 });
-
-
+                scrollRl.animate().translationX(-(Common.getScreenWidth(this) * (float) 80 / 100));
             } else {
-                if (CATEGORY_ENABLED_DISABLED) {
-
-                    bl_isNavigationOpened = false;
-                    showingMenu = false;
-                    outsideRl.animate().translationX(0).setListener(new Animator.AnimatorListener() {
-                        @Override
-                        public void onAnimationStart(Animator animation) {
-                            // TODO Auto-generated method stub
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animator animation) {
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                        }
-
-                        @Override
-                        public void onAnimationCancel(Animator animation) {
-                            if(CATEGORY_ENABLED_DISABLED)
-                            {
-                                CATEGORY_ENABLED_DISABLED = false;
-                            }
-                        }
-                    });
-                    scrollRl.animate().translationX(-(Common.getScreenWidth(this) * (float) 80 / 100));
-                } else {
-                    bl_isNavigationOpened = false;
-                    showingMenu = false;
-                    outsideRl.animate().translationX(0);
-                    scrollRl.animate().translationX(-(Common.getScreenWidth(this) * (float) 80 / 100));
-                }
+                bl_isNavigationOpened = false;
+                showingMenu = false;
+                outsideRl.animate().translationX(0);
+                scrollRl.animate().translationX(-(Common.getScreenWidth(this) * (float) 80 / 100));
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        stopSyncService();
     }
 }

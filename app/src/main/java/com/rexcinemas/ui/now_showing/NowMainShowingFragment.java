@@ -1,6 +1,7 @@
 package com.rexcinemas.ui.now_showing;
 
 
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,12 +11,16 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.rexcinemas.R;
+import com.rexcinemas.api.net.RetroClient;
 import com.rexcinemas.api.response.MovieBean;
+import com.rexcinemas.utils.Common;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,6 +28,9 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class NowMainShowingFragment extends Fragment implements NowShowingFragment.OnFragmentInteractionListener {
     /*
@@ -33,18 +41,12 @@ public class NowMainShowingFragment extends Fragment implements NowShowingFragme
     ShowPagerAdapter showAdapter;
     List<Integer> showList = new ArrayList<>();
     public static int selectedShow = 0;
-
     TextView textsamle;
     View rootView;
     Context context;
-
-
-    public static List<MovieBean> nowShowingList = new ArrayList<MovieBean>();
-
-
+    Dialog dialog;
+    protected static List<MovieBean> nowShowingList = new ArrayList<>();
     String moviePhp = "[{\"movie_id\":\"1091\",\"movie_name\":\"Kabali\",\"movie_caption\":\"PG\",\"movie_ratinng\":\"4.5\",\"movie_image\":\"http:\\/\\/rexcinemas.com.sg\\/web\\/images\\/kabali.jpg\"},{\"movie_id\":\"1092\",\"movie_name\":\"Iraivi\",\"movie_caption\":\"PG\",\"movie_ratinng\":\"4\",\"movie_image\":\"http:\\/\\/rexcinemas.com.sg\\/web\\/images\\/kabali.jpg\"},{\"movie_id\":\"1093\",\"movie_name\":\"Theri\",\"movie_caption\":\"PG\",\"movie_ratinng\":\"4.5\",\"movie_image\":\"http:\\/\\/rexcinemas.com.sg\\/web\\/images\\/kabali.jpg\"}]";
-
-
     public NowMainShowingFragment() {
         // Required empty public constructor
     }
@@ -63,18 +65,14 @@ public class NowMainShowingFragment extends Fragment implements NowShowingFragme
         rootView = inflater.inflate(R.layout.fragment_main_now_showing, container, false);
         ButterKnife.bind(rootView);
         context = getActivity();
-
-
         showViewPager = (ViewPager) rootView.findViewById(R.id.showViewPager);
-
 /*        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);*/
-
         showAdapter = new ShowPagerAdapter(getFragmentManager(), getActivity());
-
-
-        callMovieService();
-
+        if(Common.isNetworkAvailable(context))
+            callMovieService();
+        else
+            Common.showToastMessage(context,getResources().getString(R.string.dialog_no_inter_message));
         return rootView;
     }
 
@@ -111,22 +109,51 @@ public class NowMainShowingFragment extends Fragment implements NowShowingFragme
 
     }
 
+    private void showDialogue() {
+        if(dialog != null)
+            dismissDialogue();
+        dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        dialog.setContentView(R.layout.progress);
+        dialog.show();
+    }
+    protected void dismissDialogue() {
+        dialog.dismiss();
+        dialog = null;
+    }
 
     public void callMovieService() {
-        GsonBuilder gsonBUilder = new GsonBuilder();
-        Gson gson = gsonBUilder.create();
-        nowShowingList = Arrays.asList(gson.fromJson(moviePhp, MovieBean[].class));
+        showDialogue();
+        Call<String> response = RetroClient.getRetroClient().getNowShowingMovies();
+        response.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                dismissDialogue();
+                if(response.body() != null)
+                {
+                    GsonBuilder gsonBUilder = new GsonBuilder();
+                    Gson gson = gsonBUilder.create();
+                    nowShowingList = Arrays.asList(gson.fromJson(response.body(), MovieBean[].class));
+                    for (int i = 0; i < nowShowingList.size(); i++) {
+                        showList.add(i);
+                        showAdapter.addFragment(new NowShowingFragment(), i + "");
+                    }
+                    showViewPager.setAdapter(showAdapter);
+                    showViewPager.setCurrentItem(0);
+                    setupViewPager();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                dismissDialogue();
+            }
+        });
 
 
-        for (int i = 0; i < nowShowingList.size(); i++) {
-            showList.add(i);
-        }
-        for (int i = 0; i < showList.size(); i++) {
-            showAdapter.addFragment(new NowShowingFragment(), i + "");
-        }
-        showViewPager.setAdapter(showAdapter);
-        showViewPager.setCurrentItem(0);
-        setupViewPager();
+
     }
 
     @Override
@@ -147,17 +174,12 @@ public class NowMainShowingFragment extends Fragment implements NowShowingFragme
         }
 
         public void addFragment(Fragment fragment, String title) {
-
-
             mFragmentTitles.add(title);
             mFragments.add(fragment);
-
         }
 
         @Override
         public Fragment getItem(int position) {
-
-
             return mFragments.get(position);
         }
 

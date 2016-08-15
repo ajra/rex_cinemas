@@ -69,7 +69,6 @@ public class NowShowingFragment extends Fragment {
     public static Fragment newInstance(int number) {
         NowShowingFragment instance;
         instance = new NowShowingFragment();
-
         return instance;
     }
 
@@ -85,26 +84,19 @@ public class NowShowingFragment extends Fragment {
 /*
         ButterKnife.bind(rootView);
 */
-
         showBigImage=(ImageView)rootView.findViewById(R.id.showBigImage);
         showNameText=(TextView)rootView.findViewById(R.id.showNameText);
         showCaption=(TextView)rootView.findViewById(R.id.showCaption);
         showRatting=(RatingBar)rootView.findViewById(R.id.showRatting);
 
-        currentMovie=NowMainShowingFragment.nowShowingList.get(NowMainShowingFragment.selectedShow);
-
-
+        currentMovie = NowMainShowingFragment.nowShowingList.get(NowMainShowingFragment.selectedShow);
         Log.i("Fragment", "number: " + NowMainShowingFragment.selectedShow + "");
         /*ButterKnife.bind(this, rootView);*/
-
         setValues(currentMovie);
-
-
         showBigImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent dateIntent=new Intent(getActivity(), MoviesSessionActivity.class);
-
                 getActivity().startActivity(dateIntent);
             }
         });
@@ -117,8 +109,6 @@ public class NowShowingFragment extends Fragment {
         showNameText.setText(currentMovie.getMovie_name());
         showCaption.setText("("+currentMovie.getMovie_caption()+")");
         showRatting.setRating((Float.parseFloat(currentMovie.getMovie_ratinng())));
-
-
         showNameText.setTypeface(App.lato_bold);
         showCaption.setTypeface(App.lato_light);
 /*
@@ -126,15 +116,9 @@ public class NowShowingFragment extends Fragment {
 */
 
         System.out.println(currentMovie.getMovie_image());
-
         String movieUrl = currentMovie.getMovie_image().replaceAll("//","/");
-
         movieUrl=movieUrl.replaceAll("/","//");
-
-
-
         System.out.println("movie "+movieUrl);
-
         Picasso.with(getActivity())
                 .load(Uri.parse(movieUrl)).placeholder(R.drawable.bg).error(R.drawable.bg)
                 .into(showBigImage);

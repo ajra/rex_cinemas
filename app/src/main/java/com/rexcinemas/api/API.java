@@ -9,7 +9,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 public interface API {
 
-    @GET("/movies.php")
+    @GET("movies.php")
     public Call<String> getNowShowingMovies();
 
     @GET("movie_shows.php")

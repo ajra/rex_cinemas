@@ -36,7 +36,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
         android:gravity="center"
-        android:text="Ip Man 3"
         android:textColor="@color/white"
         android:textSize="20sp" />
 
@@ -48,7 +47,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="3dp"
         android:gravity="center"
-        android:text="JP-Loove"
         android:textColor="@color/movie_caption"
         android:textSize="12sp" />
 
