@@ -2,8 +2,6 @@ package com.rexcinemas.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.SparseArray;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +10,9 @@ import android.widget.Button;
 
 import com.rexcinemas.App;
 import com.rexcinemas.R;
+import com.rexcinemas.activities.MoviesSessionActivity;
 import com.rexcinemas.api.response.MovieSessionBean;
-
+import com.rexcinemas.utils.AppLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,12 +26,15 @@ public class GridSessionAdapter extends BaseAdapter {
 
     private Context mContext;
     private List<MovieSessionBean> sessionList = new ArrayList();
-    private SparseArray<SparseBooleanArray> checkedPositions;
-    int groupPosition, sessionListPosition;
+    private int checkedPositions = -1;
+    int moviePos, sessionListPosition;
 
-    public GridSessionAdapter(Context context, List<MovieSessionBean> sessionListValues) {
+    public String TAG = "Session";
+
+    public GridSessionAdapter(Context context, int moviePos, List<MovieSessionBean> sessionListValues) {
         mContext = context;
         this.sessionList = sessionListValues;
+        this.moviePos = moviePos;
         System.out.println("sessionList grid" + sessionList.size());
     }
 
@@ -66,19 +68,6 @@ public class GridSessionAdapter extends BaseAdapter {
 
             convertView.setTag(holder);
 
-         /*   System.out.println("position" + checkedPositions.get(groupPosition));
-            if (checkedPositions.get(groupPosition) != null) {
-                boolean isChecked = checkedPositions.get(groupPosition).get(sessionListPosition);
-
-
-                if(!isChecked){
-                }
-
-            } else {
-                System.out.println("false");
-            }
-*/
-
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
@@ -93,13 +82,70 @@ public class GridSessionAdapter extends BaseAdapter {
         holder.sessionTimeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                try {
 
-                if (sessionList.get(position).isSessionSelected()) {
-                    sessionList.get(position).setSessionSelected(false);
-                } else {
-                    sessionList.get(position).setSessionSelected(true);
+
+                    if (MoviesSessionActivity.selectMoviePoss == -1) {
+                        MoviesSessionActivity.selectSessionPos = position;
+                        MoviesSessionActivity.selectMoviePoss = moviePos;
+                        sessionList.get(position).setSessionSelected(true);
+
+                    } else if (MoviesSessionActivity.selectMoviePoss == moviePos) {
+                        AppLog.Log(TAG, "same movie selected" + moviePos);
+
+
+                        if (sessionList.get(position).isSessionSelected()) {
+                            sessionList.get(position).setSessionSelected(false);
+                            MoviesSessionActivity.selectSessionPos = -1;
+                            MoviesSessionActivity.selectMoviePoss = -1;
+                        } else {
+                            sessionList.get(MoviesSessionActivity.selectSessionPos).setSessionSelected(false);
+                            sessionList.get(position).setSessionSelected(true);
+                            MoviesSessionActivity.selectSessionPos = position;
+
+
+                        }
+/*                        if(MoviesSessionActivity.selectSessionPos==position)
+                        {
+                            sessionList.get(position).setSessionSelected(false);
+                            MoviesSessionActivity.selectMoviePoss=-1;
+                            MoviesSessionActivity.selectSessionPos=-1;
+
+
+                        }
+                        else
+                        {
+
+                            sessionList.get(MoviesSessionActivity.selectSessionPos).setSessionSelected(false);
+
+                            sessionList.get(position).setSessionSelected(true);
+                            MoviesSessionActivity.selectMoviePoss=moviePos;
+                            MoviesSessionActivity.selectMoviePoss=position;
+
+                        }*/
+
+
+                    } else if (MoviesSessionActivity.selectMoviePoss != moviePos) {
+                        AppLog.Log(TAG, "next movie selected" + moviePos);
+
+
+                        if (MoviesSessionActivity.selectMoviePoss != -1) {
+
+
+/*
+                            sessionList.get(MoviesSessionActivity.selectMoviePoss).
+*/
+
+                        }
+
+
+                    }
+
+
+                    notifyDataSetChanged();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                notifyDataSetChanged();
 
             }
         });
