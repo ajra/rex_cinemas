@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="2dp"
+    android:background="@drawable/movie_thumb_bg"
+    android:orientation="horizontal"
+    android:paddingBottom="15dp"
+    android:paddingLeft="20dp"
+    android:paddingTop="15dp">
+
+    <ImageView
+        android:id="@+id/movieThumbImage"
+        android:layout_width="80dp"
+        android:layout_height="90dp"
+
+        android:scaleType="fitXY"
+        android:src="@drawable/thumb01" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/movieNameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kabali The Rajjini"
+            android:layout_marginBottom="3dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/date_text_size" />
+
+        <GridView
+            android:id="@+id/sessionGridView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numColumns="3"
+            android:scrollbars="none"
+            android:stretchMode="columnWidth">
+
+        </GridView>
+
+    </LinearLayout>
+
+
+</LinearLayout>

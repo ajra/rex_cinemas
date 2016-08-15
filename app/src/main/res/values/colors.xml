@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#000000</color>
+    <color name="colorPrimaryDark">#141517</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="list_background">#FF4081</color>
+
+
+    <color name="menu_black">#BF191919</color>
+    <color name="black_transparent">#AA000000</color>
+    <color name="LoginIdTextColor">#626262</color>
+    <color name="white">#ffffff</color>
+
+
+    <color name="movie_caption">#868686</color>
+    <color name="show_time">#FC4C1D</color>
+    <color name="next_btn"> #FF0004</color>
+    <color name="back_btn">#777A81</color>
+
+    <color name="movie_bg">#111216</color>
+    <color name="date_normal">#545454</color>
+    <color name="date_selected">#f95d34</color>
+
+
+</resources>
