@@ -17,8 +17,12 @@ import com.rexcinemas.adapter.DateAdapter;
 import com.rexcinemas.adapter.MovieAdapter;
 import com.rexcinemas.api.response.MovieDateBean;
 import com.rexcinemas.api.response.MovieListbean;
+import com.rexcinemas.api.response.MovieSessionBean;
+import com.rexcinemas.utils.AppLog;
+import com.rexcinemas.utils.Common;
 import com.rexcinemas.utils.RecyclerUtils;
 
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -48,6 +52,11 @@ public class MoviesSessionActivity extends AppCompatActivity {
 
     MovieAdapter movieAdapter;
     int selectedPos = 0;
+
+    public static int selectMoviePoss = -1;
+    public static int selectSessionPos = -1;
+
+    public String TAG="Session Activity";
     String dateJson = "[{\n" +
             "\t\"theatre_name\": \"Sathyam\",\n" +
             "\t\"movie_date\": \"Sat 09 Jan\",\n" +
@@ -175,6 +184,9 @@ public class MoviesSessionActivity extends AppCompatActivity {
         try {
 
 
+            selectMoviePoss=-1;
+            selectSessionPos=-1;
+
             GsonBuilder gsonBUilder = new GsonBuilder();
             Gson gson = gsonBUilder.create();
             movieDateBeanList = Arrays.asList(gson.fromJson(dateJson, MovieDateBean[].class));
@@ -205,6 +217,14 @@ public class MoviesSessionActivity extends AppCompatActivity {
 
     public void setMovieAdapter(int moviePos) {
 
+
+      /*  for (MovieListbean bean : movieDateBeanList.get(moviePos).getMovie_list()) {
+
+            for (MovieSessionBean sessionBean) {
+
+            }
+        }*/
+
         movieAdapter = new MovieAdapter(getApplicationContext(), movieDateBeanList.get(moviePos).getMovie_list());
 
         showSessionRv.setAdapter(movieAdapter);
@@ -219,12 +239,23 @@ public class MoviesSessionActivity extends AppCompatActivity {
                     public void onItemClick(View view, int position) {
                         // TODO Handle item click
 
+
+                        if(selectMoviePoss!=-1)
+                        {
+                            movieDateBeanList.get(selectedPos).getMovie_list().get(selectMoviePoss).getMovie_session().get(selectSessionPos).setSessionSelected(false);
+
+                        }
+
                         if (dateAdapter.getItem(position).isDateSelected()) {
 
                         } else {
 
+                            selectMoviePoss = -1;
+                            selectSessionPos = -1;
                             movieDateBeanList.get(selectedPos).setDateSelected(false);
+
                             selectedPos = position;
+
                             movieDateBeanList.get(position).setDateSelected(true);
                             dateAdapter.notifyDataSetChanged();
                             setMovieAdapter(position);
@@ -247,9 +278,18 @@ public class MoviesSessionActivity extends AppCompatActivity {
 /*
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"));
 */
-                Intent browserIntent = new Intent(this,SeatSelectionActivity.class);
 
-                startActivity(browserIntent);
+                if(selectMoviePoss!=-1) {
+                    AppLog.Log(TAG, movieDateBeanList.get(selectedPos).getMovie_list().get(selectMoviePoss).getMovie_id() + " " + movieDateBeanList.get(selectedPos).getMovie_list().get(selectMoviePoss).getMovie_session().get(selectSessionPos).getSession_id());
+
+                    Intent browserIntent = new Intent(this, SeatSelectionActivity.class);
+
+                    startActivity(browserIntent);
+                }
+                else
+                {
+                    Common.showToastMessage(getApplicationContext(),"Please select any one movie");
+                }
                 break;
         }
     }
