@@ -1,5 +1,7 @@
 package com.rexcinemas.activities;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -7,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 
 import com.google.gson.Gson;
@@ -15,9 +19,12 @@ import com.rexcinemas.App;
 import com.rexcinemas.R;
 import com.rexcinemas.adapter.DateAdapter;
 import com.rexcinemas.adapter.MovieAdapter;
+import com.rexcinemas.api.net.RetroClient;
+import com.rexcinemas.api.response.MovieBean;
 import com.rexcinemas.api.response.MovieDateBean;
 import com.rexcinemas.api.response.MovieListbean;
 import com.rexcinemas.api.response.MovieSessionBean;
+import com.rexcinemas.ui.now_showing.NowShowingFragment;
 import com.rexcinemas.utils.AppLog;
 import com.rexcinemas.utils.Common;
 import com.rexcinemas.utils.RecyclerUtils;
@@ -30,6 +37,9 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MoviesSessionActivity extends AppCompatActivity {
 
@@ -138,6 +148,80 @@ public class MoviesSessionActivity extends AppCompatActivity {
             "\t\t}, {\n" +
             "\t\t\t\"session_id\": \"sss003\",\n" +
             "\t\t\t\"show_time\": \"01:30 PM\"\n" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
             "\t\t}]\n" +
             "\t}, {\n" +
             "\t\t\"movie_id\": \"1091\",\n" +
@@ -157,6 +241,8 @@ public class MoviesSessionActivity extends AppCompatActivity {
             "\t}]\n" +
             "}]";
 
+    public Context context;
+    Dialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -168,8 +254,16 @@ public class MoviesSessionActivity extends AppCompatActivity {
         LinearLayoutManager layoutManagerMovie = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         showSessionRv.setLayoutManager(layoutManagerMovie);
 
+        context=getApplicationContext();
+
         setTypeFace();
+
+/*        if(Common.isNetworkAvailable(getApplicationContext()))
+            callMovieListService();
+        else
+            Common.showToastMessage(context,getResources().getString(R.string.dialog_no_inter_message));*/
         setAdapter();
+
 
     }
 
@@ -190,13 +284,6 @@ public class MoviesSessionActivity extends AppCompatActivity {
             GsonBuilder gsonBUilder = new GsonBuilder();
             Gson gson = gsonBUilder.create();
             movieDateBeanList = Arrays.asList(gson.fromJson(dateJson, MovieDateBean[].class));
-
-/*
-            movieDateBeanList.add(movieDateBeanList.get(0));
-            movieDateBeanList.add(movieDateBeanList.get(0));
-            movieDateBeanList.add(movieDateBeanList.get(0));
-*/
-
 
             movieDateBeanList.get(0).setDateSelected(true);
             selectedPos = 0;
@@ -292,5 +379,47 @@ public class MoviesSessionActivity extends AppCompatActivity {
                 }
                 break;
         }
+    }
+
+    private void showDialogue() {
+        if(dialog != null)
+            dismissDialogue();
+        dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        dialog.setContentView(R.layout.progress);
+        dialog.show();
+    }
+    protected void dismissDialogue() {
+        dialog.dismiss();
+        dialog = null;
+    }
+
+    public void callMovieListService() {
+        showDialogue();
+        Call<String> response = RetroClient.getRetroClient().getMovieTimes();
+        response.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                dismissDialogue();
+                if(response.body() != null)
+                {
+                    GsonBuilder gsonBUilder = new GsonBuilder();
+                    Gson gson = gsonBUilder.create();
+                    movieDateBeanList = Arrays.asList(gson.fromJson(response.body(), MovieDateBean[].class));
+
+                    setAdapter();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                dismissDialogue();
+            }
+        });
+
+
+
     }
 }
