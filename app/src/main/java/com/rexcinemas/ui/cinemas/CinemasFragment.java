@@ -53,7 +53,7 @@ import retrofit2.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CinemasFragment extends Fragment implements View.OnClickListener{
+public class CinemasFragment extends Fragment implements View.OnClickListener {
     RecyclerView showDateRv;
     RecyclerView showSessionRv;
     Button backBtn;
@@ -77,7 +77,6 @@ public class CinemasFragment extends Fragment implements View.OnClickListener{
     public static int selectMoviePoss = -1;
     public static int selectSessionPos = -1;
 
-    public String TAG = "Session Activity";
 
     public Context context;
     Dialog dialog;
@@ -94,6 +93,9 @@ public class CinemasFragment extends Fragment implements View.OnClickListener{
 
     View rootView;
 
+
+    String TAG = "Cinema Fragment";
+
     public CinemasFragment() {
         // Required empty public constructor
     }
@@ -104,20 +106,23 @@ public class CinemasFragment extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
         // Inflate the layout for context fragment
         rootView = inflater.inflate(R.layout.content_movies_session, container, false);
-        ButterKnife.bind(rootView);
-        context = getActivity();
+        try {
+            context = getActivity();
 
-        rexCineamName = getString(R.string.rex_beach);
+            rexCineamName = getString(R.string.rex_beach);
 
-        init(rootView);
-        setLayoutManger();
-        setSpinnerAdapter();
+            init(rootView);
+            setLayoutManger();
+            setSpinnerAdapter();
 
-        if (Common.isNetworkAvailable(context))
-            callMovieListService();
-        else
-            Common.showToastMessage(context, getResources().getString(R.string.dialog_no_inter_message));
+            if (Common.isNetworkAvailable(context))
+                callMovieListService();
+            else
+                Common.showToastMessage(context, getResources().getString(R.string.dialog_no_inter_message));
 
+        } catch (Exception e) {
+            AppLog.handleException(TAG, e);
+        }
         return rootView;
     }
 
@@ -127,41 +132,47 @@ public class CinemasFragment extends Fragment implements View.OnClickListener{
 /*
         movieName = getIntent().getStringExtra("movie");
 */
-         showDateRv=(RecyclerView)rootView.findViewById(R.id.showDateRv);
-         showSessionRv=(RecyclerView)rootView.findViewById(R.id.showSessionRv);
+        try {
+            showDateRv = (RecyclerView) rootView.findViewById(R.id.showDateRv);
+            showSessionRv = (RecyclerView) rootView.findViewById(R.id.showSessionRv);
 
-         nextBtn=(Button)rootView.findViewById(R.id.nextBtn);
-        backBtn=(Button)rootView.findViewById(R.id.backBtn);
-        appLogo=(ImageView)rootView.findViewById(R.id.appLogo);
-        theatreSpinner=(Spinner)rootView.findViewById(R.id.theatreSpinner);
+            nextBtn = (Button) rootView.findViewById(R.id.nextBtn);
+            backBtn = (Button) rootView.findViewById(R.id.backBtn);
+            appLogo = (ImageView) rootView.findViewById(R.id.appLogo);
+            theatreSpinner = (Spinner) rootView.findViewById(R.id.theatreSpinner);
 
-        backBtn.setOnClickListener(this);
-        nextBtn.setOnClickListener(this);
+            backBtn.setOnClickListener(this);
+            nextBtn.setOnClickListener(this);
 
-        appLogo.setVisibility(View.GONE);
-        setTypeFace();
+            appLogo.setVisibility(View.GONE);
+            setTypeFace();
 
 
-        adapter = ArrayAdapter.createFromResource(context, R.array.type_sp_array, R.layout.spinner_text);
+            adapter = ArrayAdapter.createFromResource(context, R.array.type_sp_array, R.layout.spinner_text);
 
-        adapter.setDropDownViewResource(R.layout.spinner_text);
-        dateAdapter = new DateAdapter(context, dateList);
+            adapter.setDropDownViewResource(R.layout.spinner_text);
+            dateAdapter = new DateAdapter(context, dateList);
 
-        showDateRv.setAdapter(dateAdapter);
+            showDateRv.setAdapter(dateAdapter);
 
-        movieAdapter = new CineMovieAdapter(context, movieDateBeanList);
+            movieAdapter = new CineMovieAdapter(context, movieDateBeanList);
 
-        showSessionRv.setAdapter(movieAdapter);
-
+            showSessionRv.setAdapter(movieAdapter);
+        } catch (Exception e) {
+            AppLog.handleException(TAG, e);
+        }
     }
 
     public void setLayoutManger() {
-        LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
-        showDateRv.setLayoutManager(layoutManager);
+        try {
+            LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+            showDateRv.setLayoutManager(layoutManager);
 
-        LinearLayoutManager layoutManagerMovie = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-        showSessionRv.setLayoutManager(layoutManagerMovie);
-
+            LinearLayoutManager layoutManagerMovie = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+            showSessionRv.setLayoutManager(layoutManagerMovie);
+        } catch (Exception e) {
+            AppLog.handleException(TAG, e);
+        }
 
     }
 
@@ -252,71 +263,81 @@ public class CinemasFragment extends Fragment implements View.OnClickListener{
 
 
     public void setMovieAdapter() {
-        if (movieDateBeanList.size() > 0) {
+        try {
+            if (movieDateBeanList.size() > 0) {
 
 
-            movieAdapter.notifyDataSetChanged();
+                movieAdapter.notifyDataSetChanged();
+            }
+        } catch (Exception e) {
+            AppLog.handleException(TAG, e);
         }
 
     }
 
     public void setOntouch() {
-        showDateRv.addOnItemTouchListener(
-                new RecyclerUtils.RecyclerItemClickListener(context, new RecyclerUtils.RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        // TODO Handle item click
+        try {
+            showDateRv.addOnItemTouchListener(
+                    new RecyclerUtils.RecyclerItemClickListener(context, new RecyclerUtils.RecyclerItemClickListener.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, int position) {
+                            // TODO Handle item click
 
 
-                        try {
-                            if (selectedPos == position) {
+                            try {
+                                if (selectedPos == position) {
 
-                            } else {
+                                } else {
 
-                                selectMoviePoss = -1;
-                                selectSessionPos = -1;
+                                    selectMoviePoss = -1;
+                                    selectSessionPos = -1;
 
-                                dateList.get(selectedPos).setDateSelected(false);
-                                dateAdapter.notifyItemChanged(selectedPos);
-                                System.out.println("pos---" + position + dateList.size() + dateList.get(position).getMovie_date());
+                                    dateList.get(selectedPos).setDateSelected(false);
+                                    dateAdapter.notifyItemChanged(selectedPos);
+                                    System.out.println("pos---" + position + dateList.size() + dateList.get(position).getMovie_date());
 
 
-                                selectedPos = position;
+                                    selectedPos = position;
 
-                                dateList.get(position).setDateSelected(true);
+                                    dateList.get(position).setDateSelected(true);
 
-                                setMovieList(rexCineamName, dateList.get(position).getMovie_date());
-                                dateAdapter.notifyItemChanged(position);
+                                    setMovieList(rexCineamName, dateList.get(position).getMovie_date());
+                                    dateAdapter.notifyItemChanged(position);
 
+                                }
+                            } catch (Exception e) {
+                                AppLog.handleException(TAG, e);
                             }
-                        } catch (Exception e) {
-                            AppLog.handleException(TAG, e);
                         }
-                    }
-                })
-        );
-
+                    })
+            );
+        } catch (Exception e) {
+            AppLog.handleException(TAG, e);
+        }
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.backBtn:
-                Intent homefirts=new Intent(context,HomeFirstActivity.class);
+                Intent homefirts = new Intent(context, HomeFirstActivity.class);
                 startActivity(homefirts);
                 break;
             case R.id.nextBtn:
+                try {
 
+                    if (selectMoviePoss != -1) {
+                        AppLog.Log(TAG, movieDateBeanList.get(selectMoviePoss).getMovie_name() + " " + movieDateBeanList.get(selectMoviePoss).getMovie_session().get(selectSessionPos).getMovie_sessionid());
 
-                if (selectMoviePoss != -1) {
-                    AppLog.Log(TAG, movieDateBeanList.get(selectMoviePoss).getMovie_name() + " " + movieDateBeanList.get(selectMoviePoss).getMovie_session().get(selectSessionPos).getMovie_sessionid());
+                        Intent browserIntent = new Intent(context, SeatSelectionActivity.class);
+                        browserIntent.putExtra("session_id", movieDateBeanList.get(selectMoviePoss).getMovie_session().get(selectSessionPos).getMovie_sessionid());
 
-                    Intent browserIntent = new Intent(context, SeatSelectionActivity.class);
-                    browserIntent.putExtra("session_id", movieDateBeanList.get(selectMoviePoss).getMovie_session().get(selectMoviePoss).getMovie_sessionid());
-
-                    startActivity(browserIntent);
-                } else {
-                    Common.showToastMessage(context, "Please select any one movie");
+                        startActivity(browserIntent);
+                    } else {
+                        Common.showToastMessage(context, "Please select any one movie");
+                    }
+                } catch (Exception e) {
+                    AppLog.handleException(TAG, e);
                 }
                 break;
         }
@@ -347,6 +368,8 @@ public class CinemasFragment extends Fragment implements View.OnClickListener{
     }*/
 
     private void showDialogue() {
+        try
+        {
         if (dialog != null)
             dismissDialogue();
         dialog = new Dialog(context);
@@ -354,6 +377,10 @@ public class CinemasFragment extends Fragment implements View.OnClickListener{
         dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         dialog.setContentView(R.layout.progress);
         dialog.show();
+        }catch (Exception e)
+        {
+            AppLog.handleException(TAG,e);
+        }
     }
 
     protected void dismissDialogue() {
@@ -362,6 +389,8 @@ public class CinemasFragment extends Fragment implements View.OnClickListener{
     }
 
     public void callMovieListService() {
+        try
+        {
         showDialogue();
         Call<String> response = null;
 
@@ -392,10 +421,14 @@ public class CinemasFragment extends Fragment implements View.OnClickListener{
             }
         });
 
-
+        }catch (Exception e)
+        {
+            AppLog.handleException(TAG,e);
+        }
     }
 
     public void setCinemasDateList(MoviesResponse moviesResponse1) {
+
         dateSet.clear();
         dateList.clear();
         movieDateBeanList.clear();
