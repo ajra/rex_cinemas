@@ -38,7 +38,7 @@ public class NavigationHomeActivity extends BasicActivity implements View.OnClic
     ImageView headerMenu;
     LinearLayoutManager linearLayoutManager;
     ArrayList<HomeMenu> homeMenuList;
-    public static String selectedTabPosition;
+    public static int selectedTabPosition;
     public static int currentMenu = 0;
     FragmentManager fragmentManager;
     Fragment fragment;
@@ -68,6 +68,8 @@ public class NavigationHomeActivity extends BasicActivity implements View.OnClic
             HomeMenu homeMenu = new HomeMenu(menuNameArray[i],menuIconArray[i]);
             homeMenuList.add(homeMenu);
         }
+
+        selectedTabPosition=getIntent().getIntExtra("tabPos",0);
         outsideRl = (RelativeLayout) findViewById(R.id.rl_outside);
         scrollRl = (FrameLayout) findViewById(R.id.rl_scroll);
         headerMenu = (ImageView) findViewById(R.id.iv_headermenu);
@@ -89,10 +91,17 @@ public class NavigationHomeActivity extends BasicActivity implements View.OnClic
         scrollRl.setVisibility(View.VISIBLE);
         scrollRl.getLayoutParams().width = (int) (Common.getScreenWidth(NavigationHomeActivity.this) * ((float) 80 / 100));
         scrollRl.setX(-Common.getScreenWidth(NavigationHomeActivity.this) * ((float) 80 / 100));
-        displayView(0);
+
+        currentMenu = selectedTabPosition;
+
+        displayView(selectedTabPosition);
         // syncing service
         mConnectionServiceIntent = new Intent(this, ConnectionService.class);
         startSyncService();
+
+
+
+
     }
 
     private void startSyncService() {
@@ -119,7 +128,7 @@ public class NavigationHomeActivity extends BasicActivity implements View.OnClic
         public void onItemClick(AdapterView<?> parent, View view, int position,
                                 long id) {
             // display view for selected nav drawer item
-            selectedTabPosition = "" + position;
+            selectedTabPosition =   position;
             currentMenu = position;
             displayView(position);
         }
@@ -136,9 +145,7 @@ public class NavigationHomeActivity extends BasicActivity implements View.OnClic
         switch (position) {
             case 0:
                 fragment = new NowMainShowingFragment();
-                if (selectedTabPosition == null) {
-                    selectedTabPosition = "0";
-                }
+
 
                /* NowMainShowingFragment.newInstance(selectedTabPosition);
                 Bundle args = new Bundle();
@@ -162,6 +169,7 @@ public class NavigationHomeActivity extends BasicActivity implements View.OnClic
 
             fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit();
+
         }
         menuChanges();
     }

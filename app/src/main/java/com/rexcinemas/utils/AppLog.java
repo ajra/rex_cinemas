@@ -14,7 +14,7 @@ public class AppLog {
     /**
      * The constant TAG.
      */
-    public static final String TAG = "RoadWarrior";
+    public static final String TAG = "Session ";
     /**
      * The constant isDebug.
      */
@@ -107,8 +107,8 @@ public class AppLog {
 
         if (isDebug) {
             if (e != null) {
-                android.util.Log.d(tag, e.getMessage() + "");
-               AppLog.handleException(TAG,e);
+                Log.d(tag, e.getMessage() + "");
+               AppLog.handleException(tag,e);
             }
         }
     }

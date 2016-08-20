@@ -97,6 +97,8 @@ public class NowShowingFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent dateIntent=new Intent(getActivity(), MoviesSessionActivity.class);
+                dateIntent.putExtra("page","now");
+                dateIntent.putExtra("movie",showNameText.getText().toString());
                 getActivity().startActivity(dateIntent);
             }
         });
@@ -108,17 +110,17 @@ public class NowShowingFragment extends Fragment {
 
         showNameText.setText(currentMovie.getMovie_name());
         showCaption.setText("("+currentMovie.getMovie_caption()+")");
-        showRatting.setRating((Float.parseFloat(currentMovie.getMovie_ratinng())));
+
         showNameText.setTypeface(App.lato_bold);
         showCaption.setTypeface(App.lato_light);
-/*
-        showCaption.setTypeface(RexCinemas.lato_light);
-*/
 
-        System.out.println(currentMovie.getMovie_image());
-        String movieUrl = currentMovie.getMovie_image().replaceAll("//","/");
+
+        String movieUrl ="";
+                /*currentMovie.getMovie_url().replaceAll("//","/");
         movieUrl=movieUrl.replaceAll("/","//");
         System.out.println("movie "+movieUrl);
+*/
+        movieUrl="http://rexcinemas.com.sg//web//images/kabali.jpg";
         Picasso.with(getActivity())
                 .load(Uri.parse(movieUrl)).placeholder(R.drawable.bg).error(R.drawable.bg)
                 .into(showBigImage);

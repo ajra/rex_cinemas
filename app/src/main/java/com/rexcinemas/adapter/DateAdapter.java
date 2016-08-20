@@ -1,6 +1,7 @@
 package com.rexcinemas.adapter;
 
 import android.content.Context;
+import android.nfc.Tag;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,11 @@ import android.widget.TextView;
 import com.rexcinemas.App;
 import com.rexcinemas.R;
 import com.rexcinemas.api.response.MovieDateBean;
+import com.rexcinemas.utils.AppLog;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -45,6 +50,15 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateViewHolder
             final  MovieDateBean movieDateBean = movidateList.get(i);
 
 
+
+            // *** note that it's "yyyy-MM-dd hh:mm:ss" not "yyyy-mm-dd hh:mm:ss"
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            Date date = sdf.parse(movidateList.get(i).getMovie_date());
+
+
+
+            String showDate=new SimpleDateFormat("EEE dd MMM").format(date);
+            AppLog.Log("date",showDate);
             if(movieDateBean.isDateSelected())
             {
                 holder.dateLayout.setBackgroundResource(R.drawable.date_selected_bg);
@@ -56,9 +70,9 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateViewHolder
 
             }
 //Sun 10 Jan
-            String dayVal=movieDateBean.getMovie_date().substring(0,3);
-            String dateVal=movieDateBean.getMovie_date().substring(4,6);
-             String monthVal=movieDateBean.getMovie_date().substring(6);
+            String dayVal=showDate.substring(0,3);
+            String dateVal=showDate.substring(4,6);
+             String monthVal=showDate.substring(6);
 
 
             holder.showDateText.setText(dateVal);
@@ -107,6 +121,8 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateViewHolder
     public  MovieDateBean  getItem(int position)
     {
 
+
+        System.out.println("dd"+movidateList.size());
         return movidateList.get(position);
     }
     public class DateViewHolder extends RecyclerView.ViewHolder {

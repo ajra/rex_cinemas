@@ -8,7 +8,7 @@ import com.rexcinemas.api.cache.PreferenceHelper;
 
 public class App extends MultiDexApplication {
     public static PreferenceHelper preferenceHelper;
-    public static String HOST_NAME = "http://rexcinemas.com.sg/web/";
+    public static String HOST_NAME = "http://www.rexcinemas.com.sg/demo/web/";
     private static App sInstance;
     public static Typeface lato_bold,lato_light,lato_regular;
 

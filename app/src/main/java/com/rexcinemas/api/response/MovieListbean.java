@@ -5,32 +5,19 @@ import java.util.List;
 /**
  * Created by Jeyamurugan on 8/13/2016.
  */
-public class MovieListbean {
-    /**
-     * movie_id : 1091
-     * movie_name : Kabali
-     * movie_caption : PG
-     * movie_image : /images/kabali.jpg
-     * movie_session : [{"session_id":"sss001","show_time1":"12:30 PM"},{"session_id":"sss002","show_time":"03:30 PM"},{"session_id":"sss003","show_time":"21:00:00"}]
-     */
-
-    private String movie_id;
+public  class MovieListBean {
+    private String cinema_name;
+    private String movie_date;
+    private String movie_url;
     private String movie_name;
-    private String movie_caption;
-    private String movie_image;
-    /**
-     * session_id : sss001
-     * show_time1 : 12:30 PM
-     */
 
-    private List<MovieSessionBean> movie_session;
 
-    public String getMovie_id() {
-        return movie_id;
-    }
-
-    public void setMovie_id(String movie_id) {
-        this.movie_id = movie_id;
+    public MovieListBean(String cinema_name, String movie_date, String movie_url, String movie_name, List<MovieSessionBean> movie_session) {
+        this.cinema_name = cinema_name;
+        this.movie_date = movie_date;
+        this.movie_url = movie_url;
+        this.movie_name = movie_name;
+        this.movie_session = movie_session;
     }
 
     public String getMovie_name() {
@@ -41,20 +28,35 @@ public class MovieListbean {
         this.movie_name = movie_name;
     }
 
-    public String getMovie_caption() {
-        return movie_caption;
+    /**
+     * movie_sessionid : 23075
+     * movie_time : 21:00:00
+     */
+
+    private List<MovieSessionBean> movie_session;
+
+    public String getCinema_name() {
+        return cinema_name;
     }
 
-    public void setMovie_caption(String movie_caption) {
-        this.movie_caption = movie_caption;
+    public void setCinema_name(String cinema_name) {
+        this.cinema_name = cinema_name;
     }
 
-    public String getMovie_image() {
-        return movie_image;
+    public String getMovie_date() {
+        return movie_date;
     }
 
-    public void setMovie_image(String movie_image) {
-        this.movie_image = movie_image;
+    public void setMovie_date(String movie_date) {
+        this.movie_date = movie_date;
+    }
+
+    public String getMovie_url() {
+        return movie_url;
+    }
+
+    public void setMovie_url(String movie_url) {
+        this.movie_url = movie_url;
     }
 
     public List<MovieSessionBean> getMovie_session() {
@@ -67,3 +69,5 @@ public class MovieListbean {
 
 
 }
+
+

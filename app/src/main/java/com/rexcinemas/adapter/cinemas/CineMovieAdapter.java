@@ -1,4 +1,4 @@
-package com.rexcinemas.adapter;
+package com.rexcinemas.adapter.cinemas;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -15,15 +15,12 @@ import android.widget.TextView;
 
 import com.rexcinemas.App;
 import com.rexcinemas.R;
-import com.rexcinemas.activities.MoviesSessionActivity;
+import com.rexcinemas.ui.cinemas.CinemasFragment;
 import com.rexcinemas.api.response.MovieListBean;
 import com.rexcinemas.api.response.MovieSessionBean;
 import com.rexcinemas.utils.AppLog;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,13 +28,13 @@ import java.util.List;
  */
 
 
-public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
+public class CineMovieAdapter extends RecyclerView.Adapter<CineMovieAdapter.MovieViewHolder> {
 
 
     Context context;
     List<MovieListBean> movieList;
 
-    public MovieAdapter(Context context, List<MovieListBean> movieList) {
+    public CineMovieAdapter(Context context, List<MovieListBean> movieList) {
         this.context = context;
         this.movieList = movieList;
 
@@ -218,11 +215,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
             holder.sessionTimeBtn = (Button) convertView.findViewById(R.id.sessionTimeBtn);
             holder.sessionTimeBtn.setTypeface(App.lato_light);
-            holder.sessionTimeBtn.setText(convertTimeTO12Hour(sessionList.get(position).getMovie_time()));
-
-            SimpleDateFormat mSDF = new SimpleDateFormat("hh:mm a");
-
-
+            holder.sessionTimeBtn.setText(sessionList.get(position).getMovie_time());
 
 
             System.out.println("pos" + position + "  name" + sessionList.get(position).getMovie_sessionid());
@@ -233,37 +226,37 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
                     try {
 
 
-                        if (MoviesSessionActivity.selectMoviePoss == -1) {
-                            MoviesSessionActivity.selectSessionPos = position;
-                            MoviesSessionActivity.selectMoviePoss = moviePos;
+                        if (CinemasFragment.selectMoviePoss == -1) {
+                            CinemasFragment.selectSessionPos = position;
+                            CinemasFragment.selectMoviePoss = moviePos;
                             sessionList.get(position).setSessionSelected(true);
 
-                        } else if (MoviesSessionActivity.selectMoviePoss == moviePos) {
+                        } else if (CinemasFragment.selectMoviePoss == moviePos) {
                             AppLog.Log(TAG, "same movie selected" + moviePos);
 
 
                             if (sessionList.get(position).isSessionSelected()) {
                                 sessionList.get(position).setSessionSelected(false);
-                                MoviesSessionActivity.selectSessionPos = -1;
-                                MoviesSessionActivity.selectMoviePoss = -1;
+                                CinemasFragment.selectSessionPos = -1;
+                                CinemasFragment.selectMoviePoss = -1;
                             } else {
-                                sessionList.get(MoviesSessionActivity.selectSessionPos).setSessionSelected(false);
+                                sessionList.get(CinemasFragment.selectSessionPos).setSessionSelected(false);
                                 sessionList.get(position).setSessionSelected(true);
-                                MoviesSessionActivity.selectSessionPos = position;
+                                CinemasFragment.selectSessionPos = position;
 
 
                             }
 
-                        } else if (MoviesSessionActivity.selectMoviePoss != moviePos) {
-                            AppLog.Log(TAG, "next movie selected" + moviePos + "session " + MoviesSessionActivity.selectSessionPos);
+                        } else if (CinemasFragment.selectMoviePoss != moviePos) {
+                            AppLog.Log(TAG, "next movie selected" + moviePos + "session " + CinemasFragment.selectSessionPos);
 
 
-                            if (MoviesSessionActivity.selectSessionPos != -1) {
-                                movieList.get(MoviesSessionActivity.selectMoviePoss).getMovie_session().get(MoviesSessionActivity.selectSessionPos).setSessionSelected(false);
-                                MovieAdapter.super.notifyItemChanged(MoviesSessionActivity.selectMoviePoss);
+                            if (CinemasFragment.selectSessionPos != -1) {
+                                movieList.get(CinemasFragment.selectMoviePoss).getMovie_session().get(CinemasFragment.selectSessionPos).setSessionSelected(false);
+                                CineMovieAdapter.super.notifyItemChanged(CinemasFragment.selectMoviePoss);
                                 sessionList.get(position).setSessionSelected(true);
-                                MoviesSessionActivity.selectSessionPos = position;
-                                MoviesSessionActivity.selectMoviePoss = moviePos;
+                                CinemasFragment.selectSessionPos = position;
+                                CinemasFragment.selectMoviePoss = moviePos;
                             }
 
 
@@ -294,24 +287,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             return convertView;
         }
 
-        public String convertTimeTO12Hour(String timeVal) {
-            String time_12hour = "";
-
-            SimpleDateFormat f1 = new SimpleDateFormat("hh:mm:ss");
-
-            Date pmDate = null;
-            try {
-                pmDate = f1.parse(timeVal);
-            } catch (ParseException e) {
-                AppLog.handleException("time", e);
-
-
-            }
-            time_12hour = new SimpleDateFormat("hh:mm a").format(pmDate);
-
-            return time_12hour;
-
-        }
 
         public class ViewHolder {
             Button sessionTimeBtn;

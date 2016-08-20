@@ -74,10 +74,10 @@ public class GridSessionAdapter extends BaseAdapter {
 
         holder.sessionTimeBtn = (Button) convertView.findViewById(R.id.sessionTimeBtn);
         holder.sessionTimeBtn.setTypeface(App.lato_light);
-        holder.sessionTimeBtn.setText(sessionList.get(position).getShow_time());
+        holder.sessionTimeBtn.setText(sessionList.get(position).getMovie_time());
 
 
-        System.out.println("pos" + position + "  name" + sessionList.get(position).getShow_time());
+        System.out.println("pos" + position + "  name" + sessionList.get(position).getMovie_time());
 
         holder.sessionTimeBtn.setOnClickListener(new View.OnClickListener() {
             @Override

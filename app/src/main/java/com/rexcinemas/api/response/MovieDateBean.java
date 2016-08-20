@@ -6,8 +6,11 @@ import java.util.List;
  * Created by Jeyamurugan on 8/13/2016.
  */
 public class MovieDateBean {
+    public MovieDateBean(String movie_date, boolean dateSelected) {
+        this.movie_date = movie_date;
+        this.dateSelected = dateSelected;
+    }
 
-    public String theatre_name;
     public String movie_date;
 
     public boolean dateSelected;
@@ -20,15 +23,8 @@ public class MovieDateBean {
         this.dateSelected = dateSelected;
     }
 
-    public List<MovieListbean> movie_list;
 
-    public String getTheatre_name() {
-        return theatre_name;
-    }
 
-    public void setTheatre_name(String theatre_name) {
-        this.theatre_name = theatre_name;
-    }
 
     public String getMovie_date() {
         return movie_date;
@@ -38,11 +34,5 @@ public class MovieDateBean {
         this.movie_date = movie_date;
     }
 
-    public List<MovieListbean> getMovie_list() {
-        return movie_list;
-    }
 
-    public void setMovie_list(List<MovieListbean> movie_list) {
-        this.movie_list = movie_list;
-    }
 }

@@ -7,12 +7,19 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
-public interface API {
+import retrofit2.http.Query;
 
-    @GET("movies.php")
+public interface API {
+/*
+    http://www.rexcinemas.com.sg/demo/web/movies.php?r_method=movies
+*/
+    @GET("movies.php?r_method=movies")
     public Call<String> getNowShowingMovies();
 
-    @GET("movie_shows.php")
-    public Call<String> getMovieTimes();
+    @GET("movie.php")
+    public Call<String> getMovieTimes(@Query("m_movie") String moviename);
+
+    @GET("movies-list-all-cinemas.php")
+    public Call<String> getAllCinemas();
 
 }

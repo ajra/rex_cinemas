@@ -55,10 +55,13 @@ public class HomeFirstActivity extends BasicActivity {
         switch (view.getId()) {
             case R.id.nowShowingLayout:
                 Intent homeIntent = new Intent(this, NavigationHomeActivity.class);
+                homeIntent.putExtra("tabPos",0);
                 startActivity(homeIntent);
                 break;
             case R.id.cinemasLayout:
-                Common.showToastMessage(this,getString(R.string.under_development));
+                Intent homeIntent1 = new Intent(this, NavigationHomeActivity.class);
+                homeIntent1.putExtra("tabPos",1);
+                startActivity(homeIntent1);
                 break;
             case R.id.checkBookingLayout:
                 Common.showToastMessage(this,getString(R.string.under_development));

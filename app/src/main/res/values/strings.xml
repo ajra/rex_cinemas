@@ -17,5 +17,11 @@
 
     <string name="next">NEXT</string>
     <string name="back">BACK</string>
+    <string-array name="type_sp_array">
+        <item>REX Cinemas BeachRD</item>
+        <item>REX Cinemas MacKenzie Rd</item>
+    </string-array>
 
+    <string name="rex_beach">REX Cinemas BeachRD</string>
+    <string name="rex_mac">REX Cinemas MacKenzie Rd</string>
 </resources>

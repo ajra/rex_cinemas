@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.rexcinemas.activities.MoviesSessionActivity">
+    >
     <ImageView
         android:id="@+id/appLogo"
         android:layout_width="100dp"
@@ -15,15 +15,36 @@
         android:layout_centerHorizontal="true"
         android:src="@drawable/logo" />
 
+
+    <Spinner
+        android:id="@+id/theatreSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/appLogo"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+       android:gravity="center"
+        android:spinnerMode="dropdown"
+        android:visibility="visible">
+
+    </Spinner>
+
+
+
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/showDateRv"
         android:layout_width="match_parent"
         android:layout_height="110dp"
         android:layout_marginTop="5dp"
-        android:layout_below="@+id/appLogo"
+        android:layout_below="@+id/theatreSpinner"
         android:background="@color/movie_bg"
         android:paddingLeft="20dp"
         android:paddingTop="15dp"
+
         android:paddingRight="20dp"
       >
 

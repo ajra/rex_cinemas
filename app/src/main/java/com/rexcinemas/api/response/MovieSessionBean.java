@@ -5,8 +5,8 @@ package com.rexcinemas.api.response;
  */
 
 public class MovieSessionBean {
-    private String session_id;
-    private String show_time;
+    private String movie_sessionid;
+    private String movie_time;
     private boolean sessionSelected;
 
     public boolean isSessionSelected() {
@@ -17,19 +17,19 @@ public class MovieSessionBean {
         this.sessionSelected = sessionSelected;
     }
 
-    public String getSession_id() {
-        return session_id;
+    public String getMovie_sessionid() {
+        return movie_sessionid;
     }
 
-    public void setSession_id(String session_id) {
-        this.session_id = session_id;
+    public void setMovie_sessionid(String movie_sessionid) {
+        this.movie_sessionid = movie_sessionid;
     }
 
-    public String getShow_time() {
-        return show_time;
+    public String getMovie_time() {
+        return movie_time;
     }
 
-    public void setShow_time1(String show_time) {
-        this.show_time = show_time;
+    public void setMovie_time(String movie_time) {
+        this.movie_time = movie_time;
     }
 }
