@@ -94,6 +94,7 @@ public class NavigationHomeActivity extends BasicActivity implements View.OnClic
 
         currentMenu = selectedTabPosition;
 
+        showingMenu=true;
         displayView(selectedTabPosition);
         // syncing service
         mConnectionServiceIntent = new Intent(this, ConnectionService.class);

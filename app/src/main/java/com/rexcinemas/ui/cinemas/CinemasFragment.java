@@ -135,6 +135,9 @@ public class CinemasFragment extends Fragment implements View.OnClickListener{
         appLogo=(ImageView)rootView.findViewById(R.id.appLogo);
         theatreSpinner=(Spinner)rootView.findViewById(R.id.theatreSpinner);
 
+        backBtn.setOnClickListener(this);
+        nextBtn.setOnClickListener(this);
+
         appLogo.setVisibility(View.GONE);
         setTypeFace();
 
