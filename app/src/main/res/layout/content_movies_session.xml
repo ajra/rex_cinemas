@@ -5,50 +5,71 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    >
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    <!-- <ImageView
+         android:id="@+id/appLogo"
+         android:layout_width="100dp"
+         android:layout_height="100dp"
+         android:layout_alignParentTop="true"
+         android:layout_centerHorizontal="true"
+         android:src="@drawable/logo" />
+   -->
     <ImageView
         android:id="@+id/appLogo"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/logo" />
+        android:layout_marginTop="5dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/logo"
+        android:visibility="visible" />
 
-
-    <Spinner
-        android:id="@+id/theatreSpinner"
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:id="@+id/spLayout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_below="@+id/appLogo"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/white"
-       android:gravity="center"
-        android:spinnerMode="dropdown"
-        android:visibility="visible">
 
-    </Spinner>
+        android:layout_marginRight="10dp">
 
+        <Spinner
+            android:id="@+id/theatreSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:background="@color/date_normal"
+            android:gravity="center"
+            android:paddingRight="40dp"
 
+            android:scrollIndicators="right"
+            android:spinnerMode="dropdown"
+            android:visibility="visible">
 
+        </Spinner>
+
+        <ImageView
+            android:id="@+id/dropIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignRight="@+id/theatreSpinner"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/drop_down_small" />
+    </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/showDateRv"
         android:layout_width="match_parent"
-        android:layout_height="110dp"
+        android:layout_height="80dp"
+        android:layout_below="@+id/spLayout"
         android:layout_marginTop="5dp"
-        android:layout_below="@+id/theatreSpinner"
         android:background="@color/movie_bg"
         android:paddingLeft="20dp"
-        android:paddingTop="15dp"
-
         android:paddingRight="20dp"
-      >
-
-    </android.support.v7.widget.RecyclerView>
+        android:paddingTop="10dp"></android.support.v7.widget.RecyclerView>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/showSessionRv"
@@ -58,14 +79,9 @@
         android:layout_marginBottom="60dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
-
-        >
-
-    </android.support.v7.widget.RecyclerView>
+        android:layout_marginTop="10dp"></android.support.v7.widget.RecyclerView>
 
     <LinearLayout
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -89,22 +105,15 @@
             android:layout_width="85dp"
             android:layout_height="30dp"
             android:layout_alignParentLeft="true"
-
             android:layout_alignParentStart="true"
             android:layout_marginRight="20dp"
             android:background="@drawable/next_btn_bg"
             android:bottomLeftRadius="10dp"
             android:bottomRightRadius="10dp"
             android:text="@string/next"
-
-
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:topLeftRadius="10dp"
             android:topRightRadius="10dp" />
-
-
     </LinearLayout>
-
-
 </RelativeLayout>

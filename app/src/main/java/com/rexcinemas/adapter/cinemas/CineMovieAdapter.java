@@ -20,7 +20,10 @@ import com.rexcinemas.api.response.MovieListBean;
 import com.rexcinemas.api.response.MovieSessionBean;
 import com.rexcinemas.utils.AppLog;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -214,8 +217,8 @@ public class CineMovieAdapter extends RecyclerView.Adapter<CineMovieAdapter.Movi
             }
 
             holder.sessionTimeBtn = (Button) convertView.findViewById(R.id.sessionTimeBtn);
-            holder.sessionTimeBtn.setTypeface(App.lato_light);
-            holder.sessionTimeBtn.setText(sessionList.get(position).getMovie_time());
+            holder.sessionTimeBtn.setTypeface(App.lato_regular);
+            holder.sessionTimeBtn.setText(convertTimeTO12Hour(sessionList.get(position).getMovie_time()));
 
 
             System.out.println("pos" + position + "  name" + sessionList.get(position).getMovie_sessionid());
@@ -279,7 +282,7 @@ public class CineMovieAdapter extends RecyclerView.Adapter<CineMovieAdapter.Movi
 
             } else {
                 holder.sessionTimeBtn.setBackgroundResource(R.drawable.session_normal_bg);
-                holder.sessionTimeBtn.setTextColor(Color.parseColor("#000000"));
+                holder.sessionTimeBtn.setTextColor(Color.parseColor("#ffffff"));
 
             }
 
@@ -287,7 +290,24 @@ public class CineMovieAdapter extends RecyclerView.Adapter<CineMovieAdapter.Movi
             return convertView;
         }
 
+        public String convertTimeTO12Hour(String timeVal) {
+            String time_12hour = "";
 
+            SimpleDateFormat f1 = new SimpleDateFormat("hh:mm:ss");
+
+            Date pmDate = null;
+            try {
+                pmDate = f1.parse(timeVal);
+            } catch (ParseException e) {
+                AppLog.handleException("time", e);
+
+
+            }
+            time_12hour = new SimpleDateFormat("hh:mm a").format(pmDate);
+
+            return time_12hour;
+
+        }
         public class ViewHolder {
             Button sessionTimeBtn;
         }

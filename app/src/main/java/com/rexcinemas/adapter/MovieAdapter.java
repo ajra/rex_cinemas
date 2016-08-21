@@ -217,10 +217,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             }
 
             holder.sessionTimeBtn = (Button) convertView.findViewById(R.id.sessionTimeBtn);
-            holder.sessionTimeBtn.setTypeface(App.lato_light);
+            holder.sessionTimeBtn.setTypeface(App.lato_regular);
             holder.sessionTimeBtn.setText(convertTimeTO12Hour(sessionList.get(position).getMovie_time()));
 
-            SimpleDateFormat mSDF = new SimpleDateFormat("hh:mm a");
 
 
 
@@ -286,7 +285,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
             } else {
                 holder.sessionTimeBtn.setBackgroundResource(R.drawable.session_normal_bg);
-                holder.sessionTimeBtn.setTextColor(Color.parseColor("#000000"));
+                holder.sessionTimeBtn.setTextColor(Color.parseColor("#ffffff"));
 
             }
 
