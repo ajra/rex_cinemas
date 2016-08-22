@@ -33,20 +33,16 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class NowMainShowingFragment extends Fragment implements NowShowingFragment.OnFragmentInteractionListener {
-    /*
-        @Bind(R.id.showViewPager)
-    */
-    ViewPager showViewPager;
 
+    ViewPager showViewPager;
     ShowPagerAdapter showAdapter;
     List<Integer> showList = new ArrayList<>();
     public static int selectedShow = 0;
-    TextView textsamle;
     View rootView;
     Context context;
     Dialog dialog;
     protected static List<MovieBean> nowShowingList = new ArrayList<>();
-    String moviePhp = "[{\"movie_id\":\"1091\",\"movie_name\":\"Kabali\",\"movie_caption\":\"PG\",\"movie_ratinng\":\"4.5\",\"movie_image\":\"http:\\/\\/rexcinemas.com.sg\\/web\\/images\\/kabali.jpg\"},{\"movie_id\":\"1092\",\"movie_name\":\"Iraivi\",\"movie_caption\":\"PG\",\"movie_ratinng\":\"4\",\"movie_image\":\"http:\\/\\/rexcinemas.com.sg\\/web\\/images\\/kabali.jpg\"},{\"movie_id\":\"1093\",\"movie_name\":\"Theri\",\"movie_caption\":\"PG\",\"movie_ratinng\":\"4.5\",\"movie_image\":\"http:\\/\\/rexcinemas.com.sg\\/web\\/images\\/kabali.jpg\"}]";
+
     public NowMainShowingFragment() {
         // Required empty public constructor
     }
@@ -63,19 +59,21 @@ public class NowMainShowingFragment extends Fragment implements NowShowingFragme
         // Inflate the layout for this fragment
 
         rootView = inflater.inflate(R.layout.fragment_main_now_showing, container, false);
-        ButterKnife.bind(rootView);
-        context = getActivity();
-        showViewPager = (ViewPager) rootView.findViewById(R.id.showViewPager);
-/*        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);*/
-        showAdapter = new ShowPagerAdapter(getFragmentManager(), getActivity());
-        if(Common.isNetworkAvailable(context))
+        init(rootView);
+        if (Common.isNetworkAvailable(context))
             callMovieService();
         else
-            Common.showToastMessage(context,getResources().getString(R.string.dialog_no_inter_message));
+            Common.showToastMessage(context, getResources().getString(R.string.dialog_no_inter_message));
         return rootView;
     }
 
+    public void init(View rootView) {
+        context = getActivity();
+        showViewPager = (ViewPager) rootView.findViewById(R.id.showViewPager);
+        showAdapter = new ShowPagerAdapter(getFragmentManager(), getActivity());
+
+
+    }
 
     public void setupViewPager() {
         showViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -86,19 +84,8 @@ public class NowMainShowingFragment extends Fragment implements NowShowingFragme
 
             @Override
             public void onPageSelected(int position) {
-
-/*                if (byType.equalsIgnoreCase(getString(R.string.byCatg))) {
-                    CategoryId = mCategoryId.get(position);
-                } else if (byType.equalsIgnoreCase(getString(R.string.byBrand))) {
-                    brandId = mBrandId.get(position);
-                }*/
                 selectedShow = showList.get(position);
-
                 showViewPager.setCurrentItem(position);
-
-
-
-
             }
 
             @Override
@@ -110,7 +97,7 @@ public class NowMainShowingFragment extends Fragment implements NowShowingFragme
     }
 
     private void showDialogue() {
-        if(dialog != null)
+        if (dialog != null)
             dismissDialogue();
         dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -118,6 +105,7 @@ public class NowMainShowingFragment extends Fragment implements NowShowingFragme
         dialog.setContentView(R.layout.progress);
         dialog.show();
     }
+
     protected void dismissDialogue() {
         dialog.dismiss();
         dialog = null;
@@ -130,8 +118,7 @@ public class NowMainShowingFragment extends Fragment implements NowShowingFragme
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 dismissDialogue();
-                if(response.body() != null)
-                {
+                if (response.body() != null) {
                     GsonBuilder gsonBUilder = new GsonBuilder();
                     Gson gson = gsonBUilder.create();
                     nowShowingList = Arrays.asList(gson.fromJson(response.body(), MovieBean[].class));
@@ -153,7 +140,6 @@ public class NowMainShowingFragment extends Fragment implements NowShowingFragme
         });
 
 
-
     }
 
     @Override
@@ -169,7 +155,6 @@ public class NowMainShowingFragment extends Fragment implements NowShowingFragme
         public ShowPagerAdapter(FragmentManager fm, Context context) {
 
             super(fm);
-            //   this.prefHelper = new PreferenceHelper(context);
             this.context = context;
         }
 
