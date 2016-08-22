@@ -67,7 +67,9 @@ public class HomeFirstActivity extends BasicActivity {
                 Common.showToastMessage(this,getString(R.string.under_development));
                 break;
             case R.id.promotions:
-                Common.showToastMessage(this,getString(R.string.under_development));
+                Intent promoIntent = new Intent(this, NavigationHomeActivity.class);
+                promoIntent.putExtra("tabPos",3);
+                startActivity(promoIntent);
                 break;
         }
     }
