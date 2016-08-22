@@ -18,11 +18,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-/**
- * Created by Jeyamurugan on 8/13/2016.
- */
-
 public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateViewHolder> {
 
 

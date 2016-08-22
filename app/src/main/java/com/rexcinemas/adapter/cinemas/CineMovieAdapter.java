@@ -26,9 +26,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by Jeyamurugan on 8/13/2016.
- */
 
 
 public class CineMovieAdapter extends RecyclerView.Adapter<CineMovieAdapter.MovieViewHolder> {

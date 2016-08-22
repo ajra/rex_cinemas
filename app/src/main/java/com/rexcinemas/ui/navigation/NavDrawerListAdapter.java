@@ -15,9 +15,6 @@ import com.rexcinemas.R;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by SRadhakrishnan on 13-08-2016.
- */
 public class NavDrawerListAdapter extends BaseAdapter {
     private Context context;
     private List<HomeMenu> navDrawerItems;

@@ -2,9 +2,6 @@ package com.rexcinemas.api.response;
 
 import java.util.List;
 
-/**
- * Created by Jeyamurugan on 8/13/2016.
- */
 public  class MovieListBean {
     private String cinema_name;
     private String movie_date;

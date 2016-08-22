@@ -13,9 +13,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-/**
- * Created by SRadhakrishnan on 13-08-2016.
- */
 public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
     private ArrayList<HomeMenu> android;
     private Context context;

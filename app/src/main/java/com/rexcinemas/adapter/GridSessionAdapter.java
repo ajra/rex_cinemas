@@ -17,9 +17,7 @@ import com.rexcinemas.utils.AppLog;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Jeyamurugan on 8/13/2016.
- */
+
 
 
 public class GridSessionAdapter extends BaseAdapter {

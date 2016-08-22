@@ -2,9 +2,6 @@ package com.rexcinemas.api.response;
 
 import java.util.List;
 
-/**
- * Created by Jeyamurugan on 8/16/2016.
- */
 public class MoviesResponse {
     /**
      * movie_name : BABU BANGARAM (PG)

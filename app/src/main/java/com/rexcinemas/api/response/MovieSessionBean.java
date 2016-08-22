@@ -1,8 +1,5 @@
 package com.rexcinemas.api.response;
 
-/**
- * Created by Jeyamurugan on 8/13/2016.
- */
 
 public class MovieSessionBean {
     private String movie_sessionid;

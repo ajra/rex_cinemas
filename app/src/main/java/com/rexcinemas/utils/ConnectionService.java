@@ -13,9 +13,6 @@ import com.rexcinemas.ui.navigation.NavigationHomeActivity;
 import java.util.Timer;
 import java.util.TimerTask;
 
-/**
- * Created by SRadhakrishnan on 15-08-2016.
- */
 public class ConnectionService extends Service {
 
     public final static long SYNC_TIME_PERIOD = 5000;

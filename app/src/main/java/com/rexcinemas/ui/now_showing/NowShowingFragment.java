@@ -23,9 +23,6 @@ import com.squareup.picasso.Picasso;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-/**
- * Created by VKrishnasamy on 11-08-2016.
- */
 public class NowShowingFragment extends Fragment {
     ImageView showBigImage;
     TextView showNameText;

@@ -69,16 +69,14 @@ public class MoviesSessionActivity extends AppCompatActivity {
     Spinner theatreSpinner;
 
     List<MovieListBean> movieDateBeanList = new ArrayList<MovieListBean>();
-
-
     Set<String> dateSet = new HashSet<>();
     List<MovieDateBean> dateList = new ArrayList<>();
 
-
+    ArrayAdapter<CharSequence> adapter;
     DateAdapter dateAdapter;
-
-
     MovieAdapter movieAdapter;
+
+
     int selectedPos = 0;
 
     public static int selectMoviePoss = -1;
@@ -94,10 +92,10 @@ public class MoviesSessionActivity extends AppCompatActivity {
 
     public String rexCineamName = "";
 
-    ArrayAdapter<CharSequence> adapter;
-
 
     MoviesResponse moviesResponse;
+
+    boolean firstTime = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,30 +103,18 @@ public class MoviesSessionActivity extends AppCompatActivity {
         setContentView(R.layout.content_movies_session);
         ButterKnife.bind(this);
         context = getApplicationContext();
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        showDateRv.setLayoutManager(layoutManager);
 
-        LinearLayoutManager layoutManagerMovie = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        showSessionRv.setLayoutManager(layoutManagerMovie);
         init();
-        adapter = ArrayAdapter.createFromResource(this, R.array.type_sp_array, R.layout.spinner_text);
 
-        adapter.setDropDownViewResource(R.layout.spinner_text);
-
-        movieAdapter = new MovieAdapter(getApplicationContext(), movieDateBeanList);
-
-        showSessionRv.setAdapter(movieAdapter);
-
-        dateAdapter = new DateAdapter(getApplicationContext(), dateList);
-
-        showDateRv.setAdapter(dateAdapter);
         rexCineamName = getString(R.string.rex_beach);
-
+        createAdapters();
         setSpinnerAdapter();
 
 
-        if (Common.isNetworkAvailable(getApplicationContext()))
+        if (Common.isNetworkAvailable(getApplicationContext())) {
+            firstTime=true;
             callMovieListService();
+        }
         else
             Common.showToastMessage(context, getResources().getString(R.string.dialog_no_inter_message));
 
@@ -144,6 +130,7 @@ public class MoviesSessionActivity extends AppCompatActivity {
 
 
         setTypeFace();
+        setLayoutManger();
 
     }
 
@@ -151,6 +138,28 @@ public class MoviesSessionActivity extends AppCompatActivity {
         backBtn.setTypeface(App.lato_regular);
         nextBtn.setTypeface(App.lato_regular);
 
+    }
+
+    public void setLayoutManger() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        showDateRv.setLayoutManager(layoutManager);
+
+        LinearLayoutManager layoutManagerMovie = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        showSessionRv.setLayoutManager(layoutManagerMovie);
+    }
+
+    public void createAdapters() {
+        adapter = ArrayAdapter.createFromResource(this, R.array.type_sp_array, R.layout.spinner_text);
+
+        adapter.setDropDownViewResource(R.layout.spinner_text);
+
+        movieAdapter = new MovieAdapter(getApplicationContext(), movieDateBeanList);
+
+        showSessionRv.setAdapter(movieAdapter);
+
+        dateAdapter = new DateAdapter(getApplicationContext(), dateList);
+
+        showDateRv.setAdapter(dateAdapter);
     }
 
     public void setSpinnerAdapter() {
@@ -168,6 +177,7 @@ public class MoviesSessionActivity extends AppCompatActivity {
                                                              rexCineamName = getString(R.string.rex_beach);
 
                                                              if (moviesResponse != null)
+
                                                                  setCinemasDateList(moviesResponse);
 
 
@@ -249,6 +259,7 @@ public class MoviesSessionActivity extends AppCompatActivity {
                                 selectedPos = position;
 
                                 dateList.get(position).setDateSelected(true);
+                                /*firstTime=true;*/
                                 setMovieList(rexCineamName, dateList.get(position).getMovie_date());
 
 
@@ -327,8 +338,7 @@ public class MoviesSessionActivity extends AppCompatActivity {
                     Gson gson = gsonBUilder.create();
                     if (pageType.equalsIgnoreCase("now")) {
                         moviesResponse = gson.fromJson(response.body(), MoviesResponse.class);
-
-
+                        firstTime = true;
                         setCinemasDateList(moviesResponse);
 
 
@@ -418,7 +428,22 @@ public class MoviesSessionActivity extends AppCompatActivity {
                     movieAdapter.notifyDataSetChanged();
                 }
 
-                Common.showToastMessage(getApplicationContext(), "No Movies Found ");
+
+
+/*
+                AppLog.Log(TAG,firstTime+"first time " +rexCineamName+" "+theatreSpinner.getSelectedItemPosition() );
+*/
+
+                if (firstTime) {
+
+                    firstTime=false;
+                    theatreSpinner.setSelection(1);
+
+
+                } else {
+                    firstTime=false;
+                    Common.showToastMessage(getApplicationContext(), "No Movies Found ");
+                }
 
 
             }

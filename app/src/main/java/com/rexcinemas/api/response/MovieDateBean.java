@@ -2,9 +2,6 @@ package com.rexcinemas.api.response;
 
 import java.util.List;
 
-/**
- * Created by Jeyamurugan on 8/13/2016.
- */
 public class MovieDateBean {
     public MovieDateBean(String movie_date, boolean dateSelected) {
         this.movie_date = movie_date;

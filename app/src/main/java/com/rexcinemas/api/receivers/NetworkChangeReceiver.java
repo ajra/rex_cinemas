@@ -11,9 +11,6 @@ import android.util.Log;
 import com.rexcinemas.utils.AppLog;
 import com.rexcinemas.utils.Common;
 
-/**
- * Created by SRadhakrishnan on 15-08-2016.
- */
 public class NetworkChangeReceiver  extends BroadcastReceiver {
     private static final String LOG_TAG = "CheckNetworkStatus";
 

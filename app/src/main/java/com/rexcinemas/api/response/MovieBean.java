@@ -1,8 +1,5 @@
 package com.rexcinemas.api.response;
 
-/**
- * Created by Jeyamurugan on 8/12/2016.
- */
 public class MovieBean {
     /**
      * movie_id : 1091

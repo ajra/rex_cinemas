@@ -10,9 +10,6 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 import okio.Buffer;
 
-/**
- * Created by ARaja on 05-01-2016.
- */
 public class LoggingInterceptor implements Interceptor {
     public static String bodyToString(final Request request) {
         try {
