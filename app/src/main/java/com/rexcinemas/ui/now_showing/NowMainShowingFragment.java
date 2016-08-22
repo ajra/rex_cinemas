@@ -96,7 +96,7 @@ public class NowMainShowingFragment extends Fragment implements NowShowingFragme
 
                 showViewPager.setCurrentItem(position);
 
-                System.out.println("pod" + position);
+
 
 
             }

@@ -87,7 +87,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             GridSessionAdapter sessionAdapter = new GridSessionAdapter(context, i, movieListbean.getMovie_session());
             holder.sessionGridView.setAdapter(sessionAdapter);
 
-            System.out.println("adapter " + sessionAdapter.getCount());
             int totalHeight = 0;
             for (int size = 0; size < sessionAdapter.getCount(); size++) {
                 LinearLayout linearLayout = (LinearLayout) sessionAdapter.getView(
@@ -101,7 +100,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
                 linearLayout.measure(0, 0);
 
                 totalHeight += linearLayout.getMeasuredHeight();
-                System.out.println("total height" + size + totalHeight);
+
             }
 
 
@@ -176,7 +175,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             mContext = context;
             this.sessionList = sessionListValues;
             this.moviePos = moviePos;
-            System.out.println("sessionList grid" + sessionList.size());
+
         }
 
 
@@ -221,7 +220,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
 
 
-            System.out.println("pos" + position + "  name" + sessionList.get(position).getMovie_sessionid());
+
 
             holder.sessionTimeBtn.setOnClickListener(new View.OnClickListener() {
                 @Override

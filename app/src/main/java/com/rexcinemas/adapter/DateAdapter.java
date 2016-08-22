@@ -117,7 +117,6 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateViewHolder
     {
 
 
-        System.out.println("dd"+movidateList.size());
         return movidateList.get(position);
     }
     public class DateViewHolder extends RecyclerView.ViewHolder {

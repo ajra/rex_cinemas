@@ -113,10 +113,7 @@ public class NowShowingFragment extends Fragment {
 
 
         String movieUrl ="";
-                /*currentMovie.getMovie_url().replaceAll("//","/");
-        movieUrl=movieUrl.replaceAll("/","//");
-        System.out.println("movie "+movieUrl);
-*/
+
         movieUrl="http://rexcinemas.com.sg//web//images/kabali.jpg";
         Picasso.with(getActivity())
                 .load(Uri.parse(movieUrl)).placeholder(R.drawable.bg).error(R.drawable.bg)

@@ -253,7 +253,7 @@ public class MoviesSessionActivity extends AppCompatActivity {
                                 dateList.get(selectedPos).setDateSelected(false);
                                 dateAdapter.notifyItemChanged(selectedPos);
 
-                                System.out.println("pos---" + position + dateList.size() + dateList.get(position).getMovie_date());
+
 
 
                                 selectedPos = position;
@@ -373,14 +373,11 @@ public class MoviesSessionActivity extends AppCompatActivity {
         try {
             for (MovieListBean bean : moviesResponse.getMovie_list()) {
                 if (rexCineamName.equalsIgnoreCase(bean.getCinema_name()))
-/*
-                dateSet.add(bean.getMovie_date());
-*/
+
 
                     try {
 
                         setDate.add(sdf.parse(bean.getMovie_date()));
-                        System.out.println("sdf" + sdf.parse(bean.getMovie_date()));
                     } catch (ParseException e) {
                         AppLog.handleException(TAG, e);
 

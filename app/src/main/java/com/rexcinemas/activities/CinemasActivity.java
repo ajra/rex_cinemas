@@ -261,7 +261,8 @@ public class CinemasActivity extends AppCompatActivity {
 
                                 dateList.get(selectedPos).setDateSelected(false);
                                 dateAdapter.notifyItemChanged(selectedPos);
-                                System.out.println("pos---" + position + dateList.size() + dateList.get(position).getMovie_date());
+
+
 
 
                                 selectedPos = position;
@@ -369,7 +370,6 @@ public class CinemasActivity extends AppCompatActivity {
                 try {
 
                     setDate.add(sdf.parse(bean.getMovie_date()));
-                    System.out.println("sdf" + sdf.parse(bean.getMovie_date()));
                 } catch (ParseException e) {
                     AppLog.handleException(TAG, e);
 

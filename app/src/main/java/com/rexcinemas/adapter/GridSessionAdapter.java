@@ -33,7 +33,7 @@ public class GridSessionAdapter extends BaseAdapter {
         mContext = context;
         this.sessionList = sessionListValues;
         this.moviePos = moviePos;
-        System.out.println("sessionList grid" + sessionList.size());
+
     }
 
 
@@ -75,7 +75,7 @@ public class GridSessionAdapter extends BaseAdapter {
         holder.sessionTimeBtn.setText(sessionList.get(position).getMovie_time());
 
 
-        System.out.println("pos" + position + "  name" + sessionList.get(position).getMovie_time());
+
 
         holder.sessionTimeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
