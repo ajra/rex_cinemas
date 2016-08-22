@@ -75,16 +75,16 @@ public class PromotionsFragment extends Fragment {
                 .into(promoBigImage);
 */
 
-        if(PromotionHomeFragment.selectedPromotion==0)
+        if(currentPromo==0)
         {
             promoBigImage.setImageResource(R.drawable.promotions1);
         }
-        else if(PromotionHomeFragment.selectedPromotion==1)
+        else if(currentPromo==1)
         {
             promoBigImage.setImageResource(R.drawable.promotions2);
 
        }
-        else if(PromotionHomeFragment.selectedPromotion==2)
+        else if(currentPromo==2)
         {
             promoBigImage.setImageResource(R.drawable.promotions3);
 
