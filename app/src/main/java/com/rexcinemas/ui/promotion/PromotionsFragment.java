@@ -67,13 +67,29 @@ public class PromotionsFragment extends Fragment {
     {
 
 
-        String movieUrl ="";
+       /* String movieUrl ="";
 
         movieUrl="http://rexcinemas.com.sg//web//images/kabali.jpg";
         Picasso.with(getActivity())
                 .load(Uri.parse(movieUrl)).placeholder(R.drawable.bg).error(R.drawable.bg)
                 .into(promoBigImage);
+*/
 
+        if(PromotionHomeFragment.selectedPromotion==0)
+        {
+            promoBigImage.setImageResource(R.drawable.promotions1);
+        }
+        else if(PromotionHomeFragment.selectedPromotion==1)
+        {
+            promoBigImage.setImageResource(R.drawable.promotions2);
+
+       }
+        else if(PromotionHomeFragment.selectedPromotion==2)
+        {
+            promoBigImage.setImageResource(R.drawable.promotions3);
+
+
+        }
 
 
     }
