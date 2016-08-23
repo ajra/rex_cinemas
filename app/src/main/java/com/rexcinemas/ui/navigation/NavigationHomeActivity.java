@@ -20,7 +20,7 @@ import com.rexcinemas.activities.BasicActivity;
 import com.rexcinemas.ui.check_booking.CheckBookingFragment;
 import com.rexcinemas.ui.cinemas.CinemasFragment;
 import com.rexcinemas.ui.now_showing.NowMainShowingFragment;
-import com.rexcinemas.ui.promotion.PromotionFragment;
+import com.rexcinemas.ui.promotion.PromotionHomeFragment;
 import com.rexcinemas.utils.Common;
 import com.rexcinemas.utils.ConnectionService;
 
@@ -160,7 +160,7 @@ public class NavigationHomeActivity extends BasicActivity implements View.OnClic
                 fragment = new CheckBookingFragment();
                 break;
             case 3:
-                fragment = new PromotionFragment();
+                fragment = new PromotionHomeFragment();
                 break;
             default:
                 break;

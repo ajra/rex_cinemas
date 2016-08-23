@@ -59,6 +59,7 @@ public class PromotionsFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_promotion, container, false);
 
         promoBigImage=(ImageView)rootView.findViewById(R.id.promoBigImage);
+        currentPromo=PromotionHomeFragment.selectedPromotion;
         setValues(currentPromo);
         return rootView;
     }
@@ -67,13 +68,7 @@ public class PromotionsFragment extends Fragment {
     {
 
 
-       /* String movieUrl ="";
 
-        movieUrl="http://rexcinemas.com.sg//web//images/kabali.jpg";
-        Picasso.with(getActivity())
-                .load(Uri.parse(movieUrl)).placeholder(R.drawable.bg).error(R.drawable.bg)
-                .into(promoBigImage);
-*/
 
         if(currentPromo==0)
         {
