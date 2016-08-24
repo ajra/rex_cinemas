@@ -301,6 +301,11 @@ public class CineMovieAdapter extends RecyclerView.Adapter<CineMovieAdapter.Movi
 
             }
             time_12hour = new SimpleDateFormat("hh:mm a").format(pmDate);
+            if (time_12hour.contains(".")) {
+                time_12hour = time_12hour.replace(".", "");
+
+            }
+            System.out.println("time_12hour" + time_12hour);
 
             return time_12hour;
 
