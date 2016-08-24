@@ -27,7 +27,6 @@ import java.util.Date;
 import java.util.List;
 
 
-
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
 
@@ -217,11 +216,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             holder.sessionTimeBtn.setText(convertTimeTO12Hour(sessionList.get(position).getMovie_time()));
 
 
-
-
-
-
-
             holder.sessionTimeBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -304,6 +298,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             }
             time_12hour = new SimpleDateFormat("hh:mm a").format(pmDate);
 
+
+            if (time_12hour.contains(".")) {
+                time_12hour = time_12hour.replace(".", "");
+
+            }
+            System.out.println("time_12hour" + time_12hour);
             return time_12hour;
 
         }
