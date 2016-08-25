@@ -40,6 +40,8 @@ public class NavigationHomeActivity extends BasicActivity implements View.OnClic
     ArrayList<HomeMenu> homeMenuList;
     public static int selectedTabPosition;
     public static int currentMenu = 0;
+    public int widthAbove = 60;
+    public int widthBlow = 100;
     FragmentManager fragmentManager;
     Fragment fragment;
     Context context;
@@ -89,8 +91,8 @@ public class NavigationHomeActivity extends BasicActivity implements View.OnClic
         navigationRecyclerView.setHasFixedSize(true);
         navigationRecyclerView.setAdapter(menuAdapter);
         scrollRl.setVisibility(View.VISIBLE);
-        scrollRl.getLayoutParams().width = (int) (Common.getScreenWidth(NavigationHomeActivity.this) * ((float) 80 / 100));
-        scrollRl.setX(-Common.getScreenWidth(NavigationHomeActivity.this) * ((float) 80 / 100));
+        scrollRl.getLayoutParams().width = (int) (Common.getScreenWidth(NavigationHomeActivity.this) * ((float) widthAbove / widthBlow));
+        scrollRl.setX(-Common.getScreenWidth(NavigationHomeActivity.this) * ((float) widthAbove / widthBlow));
 
         currentMenu = selectedTabPosition;
 
@@ -189,7 +191,7 @@ public class NavigationHomeActivity extends BasicActivity implements View.OnClic
             //Disable Swipe
             bl_isNavigationOpened = true;
             showingMenu = true;
-            outsideRl.animate().translationX((Common.getScreenWidth(this) * (float) 80 / 100));
+            outsideRl.animate().translationX((Common.getScreenWidth(this) * (float) widthAbove / widthBlow));
             scrollRl.animate().translationX(0).setListener(new Animator.AnimatorListener() {
                 @Override
                 public void onAnimationStart(Animator animation) {
@@ -236,12 +238,12 @@ public class NavigationHomeActivity extends BasicActivity implements View.OnClic
                         }
                     }
                 });
-                scrollRl.animate().translationX(-(Common.getScreenWidth(this) * (float) 80 / 100));
+                scrollRl.animate().translationX(-(Common.getScreenWidth(this) * (float) widthAbove / widthBlow));
             } else {
                 bl_isNavigationOpened = false;
                 showingMenu = false;
                 outsideRl.animate().translationX(0);
-                scrollRl.animate().translationX(-(Common.getScreenWidth(this) * (float) 80 / 100));
+                scrollRl.animate().translationX(-(Common.getScreenWidth(this) * (float) widthAbove / widthBlow));
             }
         }
     }

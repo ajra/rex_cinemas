@@ -2,7 +2,7 @@ package com.rexcinemas.api.response;
 
 import java.util.List;
 
-public  class MovieListBean {
+public class MovieListBean {
     private String cinema_name;
     private String movie_date;
     private String movie_url;
