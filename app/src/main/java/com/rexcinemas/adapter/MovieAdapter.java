@@ -2,6 +2,7 @@ package com.rexcinemas.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.rexcinemas.activities.MoviesSessionActivity;
 import com.rexcinemas.api.response.MovieListBean;
 import com.rexcinemas.api.response.MovieSessionBean;
 import com.rexcinemas.utils.AppLog;
+import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -59,11 +61,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             holder.movieNameText.setText(movieListbean.getMovie_name());
 
 
-/*
             Picasso.with(context)
-                    .load(Uri.parse("http://rexcinemas.com.sg//web//" + movieImageUrl)).placeholder(R.drawable.thumb01).error(R.drawable.thumb01)
+                    .load(Uri.parse(movieListbean.getMovie_url())).placeholder(R.drawable.thumb01).error(R.drawable.thumb01)
                     .into(holder.movieThumbImage);
-*/
 
             holder.movieNameText.setTypeface(App.lato_bold);
 
